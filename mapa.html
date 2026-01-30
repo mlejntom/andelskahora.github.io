@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <script src="data/kn_0.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <h1>Hrad Andělská Hora</h1>
+    <body>
+        <header class="site-header">
+        <nav>
+            <a href="mapa.html" class="active">Mapa</a>
+            <a href="mesh.html">3D Model</a>
+            <a href="pano.html">Hrad 360°</a>
+            <a href="potree.html">Point Cloud</a>
+        </nav>
+    </header>
+
+    <div id="map"></div>
+    <script>
+
+        var map = L.map('map').setView([50.2059508, 12.9623686], 17);
+
+        var osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Ortofoto WMS
+        map.createPane('pane_Ortofoto_0');
+        map.getPane('pane_Ortofoto_0').style.zIndex = 400;
+        var ortoLayeer = L.tileLayer.wms("https://geoportal.cuzk.cz/WMS_ORTOFOTO_PUB/WMService.aspx", {
+            layers: 'GR_ORTFOTORGB',
+            format: 'image/png',
+            transparent: true,
+            attribution: 'ČÚZK Ortofoto',
+            pane: 'pane_Ortofoto_0'
+        }).addTo(map);
+
+
+        // Image
+        var imgUrl = "data/cisotisk.png";
+        map.createPane('pane_cisotisk_1');
+        map.getPane('pane_cisotisk_1').style.zIndex = 401
+        var imgBB = [[50.20411442748817,12.961875054115591],[50.20705976433008,12.966165526789842]];
+        var imgLayer = L.imageOverlay(imgUrl, imgBB, { pane: "pane_cisotisk_1" }).addTo(map);
+
+
+        //GeoJSON
+        map.createPane('pane_geojson_1');
+        map.getPane('pane_geojson_1').style.zIndex = 402
+
+
+        var geojsonFeature = {
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "name": "Polygon z GPX bodů"
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [[
+                    [12.963016, 50.205446],
+                    [12.963096, 50.205373],
+                    [12.963386, 50.205375],
+                    [12.963651, 50.205315],
+                    [12.964818, 50.205878],
+                    [12.964732, 50.206044],
+                    [12.964528, 50.206029],
+                    [12.963088, 50.205624],
+                    [12.963016, 50.205446] // uzavření polygonu
+                ]]
+            }
+        }
+    ]
+};
+
+        var boundingbox = L.geoJSON(geojsonFeature, {
+            style: function (feature) {
+                return { color: "#00FFFF", weight: 5, fillOpacity: 0.3 };
+            },
+            onEachFeature: function (feature, layer) {
+                if (feature.properties && feature.properties.name) {
+                    layer.bindPopup(feature.properties.name);
+                }
+            },
+             pane: "pane_geojson_1" 
+        }).addTo(map);
+
+        // Katastr
+
+        var geojsonkn = L.geoJSON(json_kn_0, {
+            style: function (feature) {
+                return { color: "#ffffff", weight: 2, fillOpacity: 0.3 };
+            },
+            onEachFeature: function (feature, layer) {
+                if (feature.properties && feature.properties.name) {
+                    layer.bindPopup(feature.properties.name);
+                }
+            },
+             pane: "pane_geojson_1" 
+        }).addTo(map);
+
+        //Tiled raster
+        map.createPane('pane_tiled_1');
+        map.getPane('pane_tiled_1').style.zIndex = 404
+        var tilesource_layer = L.tileLayer(
+            'data/dem/{z}/{x}/{y}.jpg',
+            { minZoom: 12, maxZoom: 22, tms: false, attribution: 'Created by QGIS', pane: "pane_tiled_1" }).addTo(map);
+
+                    var baseMaps = {
+            "OpenStreetMap": osmLayer,
+            "Orthophoto": ortoLayeer
+        };
+                // Overlay layers for layer control
+        var overlayMaps = {
+            "Císařský otisk": imgLayer,
+            "Polygon": boundingbox,
+            "Katastrální mapa": geojsonkn,
+        };
+        var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
+    </script>
+
+
+</body>
+
+</html>

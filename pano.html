@@ -1,0 +1,171 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <link rel="stylesheet" href="style.css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panorama 360</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+    <style>
+        #panorama {
+            width: 100%;
+            height: 800px;
+        }
+    </style>
+</head>
+
+<body>
+        <header class="site-header">
+        <nav>
+            <a href="mapa.html" >Mapa</a>
+            <a href="mesh.html">3D Model</a>
+            <a href="pano.html" class="active">Hrad 360°</a>
+            <a href="potree.html">Point Cloud</a>
+        </nav>
+    </header>
+    <div id="panorama"></div>
+    <script>
+        pannellum.viewer('panorama', {
+            "default": {
+                "firstScene": "pano1",
+                "author": "Tomas Mlejnek",
+                "sceneFadeDuration": 1000
+            },
+
+            "scenes": {
+                "pano1": {
+                    "title": "Věž",
+                    "hfov": 120,
+                    "pitch": 0,
+                    "yaw": 0,
+                    "type": "equirectangular",
+                    "panorama": "/data/pano/pano1.png",
+                    "hotSpots": [
+                        {
+                            "pitch": -20,
+                            "yaw": 20,
+                            "type": "scene",
+                            "text": "Před branou",
+                            "sceneId": "pano2"
+                        },
+                                {
+                        "pitch": -40,
+                        "yaw": 10,
+                        "type": "scene",
+                        "text": "Za branou",
+                        "sceneId": "pano3"
+                         },
+                         {
+                        "pitch": -20,
+                        "yaw": 0,
+                        "type": "scene",
+                        "text": "Hlavní palác",
+                        "sceneId": "pano4"
+                         }
+                    ]
+                },
+
+                "pano2": {
+                    "title": "Před bránou",
+                    "hfov": 120,
+                    "yaw": 0,
+                    "type": "equirectangular",
+                    "panorama": "/data/pano/pano2.png",
+                    "hotSpots": [
+                        {
+                            "pitch": 7,
+                            "yaw": -33,
+                            "type": "scene",
+                            "text": "Věž",
+                            "sceneId": "pano1",
+ 
+                        },
+                         {
+                        "pitch": -15,
+                        "yaw": -25,
+                        "type": "scene",
+                        "text": "Za branou",
+                        "sceneId": "pano3"
+                         },
+                        {
+                        "pitch": 5,
+                        "yaw": 0,
+                        "type": "scene",
+                        "text": "Hlavní palác",
+                        "sceneId": "pano4"
+                         }
+                    ]
+                },
+
+                    "pano3": {
+                    "title": "Za bránou",
+                    "hfov": 120,
+                    "yaw": 0,
+                    "type": "equirectangular",
+                    "panorama": "/data/pano/pano3.png",
+                    "hotSpots": [
+                        {
+                            "pitch": 35,
+                            "yaw": -23,
+                            "type": "scene",
+                            "text": "Věž",
+                            "sceneId": "pano1",
+                        },
+                                                {
+                            "pitch": -30,
+                            "yaw": 210,
+                            "type": "scene",
+                            "text": "Před bránou",
+                            "sceneId": "pano2",
+                        },
+                                                {
+                            "pitch": 15,
+                            "yaw": 110,
+                            "type": "scene",
+                            "text": "Hlavní palác",
+                            "sceneId": "pano4",
+                        }
+                    ]
+                },
+                "pano4": {
+                    "title": "Hlavní věž",
+                    "hfov": 120,
+                    "yaw": 0,
+                    "type": "equirectangular",
+                    "panorama": "/data/pano/pano4.png",
+                    "hotSpots": [
+                        {
+                            "pitch": 14,
+                            "yaw": -70,
+                            "type": "scene",
+                            "text": "Věž",
+                            "sceneId": "pano1",
+
+                        },
+                                               {
+                            "pitch": -20,
+                            "yaw": -75,
+                            "type": "scene",
+                            "text": "Za branou",
+                            "sceneId": "pano3",
+
+                        },
+                                               {
+                            "pitch": -20,
+                            "yaw": 160,
+                            "type": "scene",
+                            "text": "Před branou",
+                            "sceneId": "pano2",
+
+                        }
+                    ]
+                }
+            }
+        });
+    </script>
+
+</body>
+
+</html>

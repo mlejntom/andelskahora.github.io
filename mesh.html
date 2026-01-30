@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mesh model</title>
+
+    <link rel="stylesheet" href="style.css" />
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+
+    <script>
+        let isFirstModel = true;
+
+        function switchModel() {
+            const modelviewer = document.getElementById("modelviewerid");
+            const button = document.getElementById("buttonModel");
+
+            if (isFirstModel) {
+                modelviewer.src = "./mesh/hrad7.glb";
+                modelviewer.cameraOrbit = '180deg 70deg 1m';
+                button.textContent = "Zobrazit dnešní stav";
+            } else {
+                modelviewer.src = "./mesh/dnes-v1.glb";
+                modelviewer.cameraOrbit = '0deg 75deg 1m';
+                button.textContent = "Zobrazit historický model";
+            }
+
+            isFirstModel = !isFirstModel;
+        }
+    </script>
+</head>
+
+<body>
+
+<header class="site-header">
+    <nav>
+        <a href="mapa.html">Mapa</a>
+        <a href="mesh.html" class="active">3D Model</a>
+        <a href="pano.html">Hrad 360°</a>
+        <a href="potree.html">Point Cloud</a>
+    </nav>
+</header>
+
+<model-viewer
+    id="modelviewerid"
+    alt="Svihov"
+    src="./mesh/dnes-v1.glb"
+    ar
+    shadow-intensity="1"
+    camera-controls
+    touch-action="pan-y">
+</model-viewer>
+
+<footer>
+    <button id="buttonModel" class="footer-button" onclick="switchModel()">
+        Zobrazit historický model
+    </button>
+</footer>
+
+</body>
+</html>

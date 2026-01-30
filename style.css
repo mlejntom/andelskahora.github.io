@@ -1,0 +1,69 @@
+#map {
+    width: 100%;
+    height: 800px;
+}
+
+model-viewer {
+  width: 100%;
+  height: 80vh;
+  background-color: #708ad1;
+  --poster-color: #ffffff00;
+  --progress-bar-color: #FFCC01;
+  --progress-bar-height: 2%;
+}
+
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: rgba(255, 255, 255);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+.site-header nav {
+    display: flex;
+    gap: 20px;
+}
+
+.site-header nav a {
+    color: #002fff;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    background: rgb(195, 228, 247);
+}
+
+.site-header nav a.active {
+    background: #4501ff;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.footer-button {
+    color: #ffffff;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-size: 2rem;
+    background: #4501ff;
+    display: inline-block;
+    border: none;        
+    outline: none;       
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+}
+
+h1 {
+    text-align: center;
+}
